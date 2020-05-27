@@ -18,13 +18,17 @@ Or install it yourself as:
 
 ## Usage
 
+```
     require 'coinrpc'
     client = CoinRPC::Client.new("http://username:password@hostname:port")
     puts client.getblockchaininfo
+```
 
 Responses will contain coin values as BigDecimals:
 
+```
     puts client.getrawtransaction(txid)['vout'].first['value'].to_s("F")
+```
 
 ## Contributing
 
