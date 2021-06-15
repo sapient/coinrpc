@@ -51,7 +51,7 @@ module CoinRPC
 
       response = @client.post("/", :body => Oj.dump(params, mode: :compat)).to_s
 
-      result = Oj.strict_load(response, :bigdecimal_load => :bigdecimal)
+      result = Oj.strict_load(response, :decimal_class => BigDecimal)
       
       raise result['error']['message'] if !result.is_a?(Array) and result['error']
 
