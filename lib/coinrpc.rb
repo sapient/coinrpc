@@ -1,6 +1,10 @@
 require 'http'
 require 'oj'
+require 'json'
 require 'coinrpc/version'
+
+# let OJ mimic JSON
+Oj.mimic_JSON
 
 module CoinRPC
   class Client
@@ -51,7 +55,8 @@ module CoinRPC
 
       response = @client.post("/", :body => Oj.dump(params, mode: :compat)).to_s
 
-      result = Oj.strict_load(response, :bigdecimal_load => :bigdecimal)
+      # this won't work without Oj.mimic_JSON
+      result = Oj.strict_load(response, :decimal_class => BigDecimal)
       
       raise result['error']['message'] if !result.is_a?(Array) and result['error']
 
